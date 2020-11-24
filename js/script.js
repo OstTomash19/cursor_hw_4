@@ -11,31 +11,25 @@ const getPairs = (group) => {
     for(let i = 0; i < group.length / 2; i++) {
         pairs.push([`${womenArr[i]} і ${menArr[i]}`]);
     }
-
     return pairs;
 };
 
 const giveTopicsToEachPair = (students, themes) => {
-    const pairsOfStudents = [...getPairs(students)];
     const pairsWithThemes = [];
 
-    for(let i = 0; i < pairsOfStudents.length; i++) {
-        pairsWithThemes.push(pairsOfStudents[i]);
+    for(let i = 0; i < getPairs(students).length; i++) {
+        pairsWithThemes.push(getPairs(students)[i]);
         pairsWithThemes[i].push(themes[i]);
     }
     return pairsWithThemes;
-
 };
 
 const giveMarksToStudents = (students, marks) => {
-    const newArrayOfStudents = [...students];
-    const newArrayOfMarks = [...marks];
     const arrWithStudentsMarks = [];
 
-    for(let i = 0; i < newArrayOfStudents.length; i++) {
-        arrWithStudentsMarks.push([newArrayOfStudents[i], newArrayOfMarks[i]]);
+    for(let i = 0; i < students.length; i++) {
+        arrWithStudentsMarks.push([students[i], marks[i]]);
     }
-
     return arrWithStudentsMarks;
 };
 
