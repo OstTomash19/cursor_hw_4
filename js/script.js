@@ -1,49 +1,40 @@
-const getPairs = (group) => {
-    const womenArr = [];
-    const menArr = [];
-    const pairs = [];
+const getPairs = (students) => {
+    const womenArr = students.filter(student => {
+        return student.charAt(student.length - 1) === "а";
+    });
 
-    for(let i = 0; i < group.length; i++){
-        if(womenStudentsArray.includes(group[i])) womenArr.push(students[i]);
-        else menArr.push(group[i]);
-    }
+    const menArr = students.filter(student => {
+        return student.charAt(student.length - 1) !== "а";
+    });
 
-    for(let i = 0; i < group.length / 2; i++) {
-        pairs.push([`${womenArr[i]} і ${menArr[i]}`]);
-    }
+    const pairs = menArr.map((student, i) => {
+        return [`${student} i ${womenArr[i]}`];
+    });
+
     return pairs;
 };
 
 const giveTopicsToEachPair = (students, themes) => {
-    const pairsWithThemes = [];
-
-    for(let i = 0; i < getPairs(students).length; i++) {
-        pairsWithThemes.push(getPairs(students)[i]);
-        pairsWithThemes[i].push(themes[i]);
-    }
+    const pairsWithThemes = getPairs(students).map((students, i) =>{
+        return [...students, themes[i]];
+    });
     return pairsWithThemes;
 };
 
 const giveMarksToStudents = (students, marks) => {
-    const arrWithStudentsMarks = [];
+    const arrWithStudentsMarks = [...students].map((student, i) => {
+        return [student, marks[i]];
+    });
 
-    for(let i = 0; i < students.length; i++) {
-        arrWithStudentsMarks.push([students[i], marks[i]]);
-    }
     return arrWithStudentsMarks;
 };
 
 const giveMarksForProject = (students, themes) => {
-    const pairsWithThemes = [...giveTopicsToEachPair(students, themes)];
-    const finallArr = [];
     const minMark = 1;
     const maxMark = 5;
-
-    for(let i = 0; i < pairsWithThemes.length; i++) {
-        finallArr.push([pairsWithThemes[i][0],
-                        pairsWithThemes[i][1],
-                        (Math.floor(Math.random() * (maxMark - minMark + 1)) + minMark)]);
-    }
+    const finallArr = giveTopicsToEachPair(students, themes).map(pairWithTheme => {
+        return [...pairWithTheme, Math.floor(Math.random() * (maxMark - minMark + 1)) + minMark];
+    });
 
     return finallArr; 
 };
@@ -51,9 +42,6 @@ const giveMarksForProject = (students, themes) => {
 const students = ["Олександр", "Ігор", "Олена", "Іра", "Олексій", "Світлана"];
 const themes = ["Диференційне рівняння", "Теорія автоматів", "Алгоритми і структури даних"];
 const marks = [4, 5, 5, 3, 4, 5];
-
-const womenStudentsArray = ["Олена", "Іра", "Світлана"];
-const menStudentsArray = ["Олександр", "Ігор", "Олексій"];
 
 console.log(students);
 console.log(themes);
